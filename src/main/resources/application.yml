@@ -14,7 +14,7 @@ spring:
   # session 配置
   session:
     # todo 取消注释开启分布式 session（须先配置 Redis）
-    # store-type: redis
+    store-type: redis
     # 30 天过期
     timeout: 2592000
   # 数据库配置
@@ -77,20 +77,20 @@ spring:
           result-set-close-after-log-enabled: false
       ########## 配置WebStatFilter，用于采集web关联监控的数据 ##########
       web-stat-filter:
-        enabled: true                   # 启动 StatFilter
-        url-pattern: /* # 过滤所有url
-        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" # 排除一些不必要的url
-        session-stat-enable: true       # 开启session统计功能
-        session-stat-max-count: 1000 # session的最大个数,默认100
+        enabled: false                   # 启动 StatFilter
+#        url-pattern: /* # 过滤所有url
+#        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" # 排除一些不必要的url
+#        session-stat-enable: true       # 开启session统计功能
+#        session-stat-max-count: 1000 # session的最大个数,默认100
       ########## 配置StatViewServlet（监控页面），用于展示Druid的统计信息 ##########
       stat-view-servlet:
-        enabled: true                   # 启用StatViewServlet
-        url-pattern: /druid/* # 访问内置监控页面的路径，内置监控页面的首页是/druid/index.html
-        reset-enable: false              # 不允许清空统计数据,重新计算
-        login-username: root # 配置监控页面访问密码
-        login-password: 123
-        allow: 127.0.0.1 # 允许访问的地址，如果allow没有配置或者为空，则允许所有访问
-        deny: # 拒绝访问的地址，deny优先于allow，如果在deny列表中，就算在allow列表中，也会被拒绝
+        enabled: false                   # 启用StatViewServlet,默认为true
+#        url-pattern: /druid/* # 访问内置监控页面的路径，内置监控页面的首页是/druid/index.html
+#        reset-enable: false              # 不允许清空统计数据,重新计算
+#        login-username: root # 配置监控页面访问密码
+#        login-password: 123
+#        allow: 127.0.0.1 # 允许访问的地址，如果allow没有配置或者为空，则允许所有访问
+#        deny: # 拒绝访问的地址，deny优先于allow，如果在deny列表中，就算在allow列表中，也会被拒绝
   # Redis 配置
   # todo 需替换配置，然后取消注释
   redis:
@@ -98,11 +98,11 @@ spring:
     host: 192.168.100.128
     port: 6379
     timeout: 5000
-#    password: 123456
+    password: 123321
   # Elasticsearch 配置
   # todo 需替换配置，然后取消注释
   elasticsearch:
-    uris: http://192.168.100.128:9200
+    uris:  192.168.100.128:9200
     username: root
     password: 123456
   # 文件上传
@@ -111,7 +111,7 @@ spring:
       # 大小限制
       max-file-size: 10MB
 server:
-  address: 0.0.0.0
+#  address: 0.0.0.0
   port: 8101
   servlet:
     context-path: /api
@@ -167,8 +167,8 @@ wx:
   mp:
     token: xxx
     aesKey: xxx
-    appId: xxx
-    secret: xxx
+    appId: wxf2f3ec1435991131xxxx
+    secret: 80cc45346775bb1286bd3b5fa620d81cxxxx
     config-storage:
       http-client-type: HttpClient
       key-prefix: wx
@@ -179,16 +179,16 @@ wx:
   # 微信开放平台
   # todo 需替换配置
   open:
-    appId: xxx
-    appSecret: xxx
+    appId: wxf2f3ec1435991131xxxx
+    appSecret: 80cc45346775bb1286bd3b5fa620d81cxxxx
 # 对象存储
 # todo 需替换配置
 cos:
   client:
-    accessKey: xxx
-    secretKey: xxx
-    region: xxx
-    bucket: xxx
+    accessKey: LTAI5tChzi1g1csczkKBbec9xxxx
+    secretKey: b5Q8lM87zbKlbbxfvyYH8W7fXCOISixxxx
+    region: cn-beijing
+    bucket: java-webai-1
 # 接口文档配置
 knife4j:
   enable: true
@@ -202,4 +202,4 @@ knife4j:
           - com.yupi.mianshiya.controller
 # AI 大模型接入（目前是火山引擎 DeepSeek）
 ai:
-  apiKey: 填写自己的 API Key
+  apiKey: 17f71b82-c743-49e8-ba44-f6daf53c0fc6xxxx
