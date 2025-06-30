@@ -109,7 +109,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userAccount", userAccount);
         queryWrapper.eq("userPassword", encryptPassword);
-        User user = this.baseMapper.selectOne(queryWrapper);
+        User user = this.baseMapper.selectOne(queryWrapper); // selectOne 会抛出异常，不会返回null
         // 用户不存在
         if (user == null) {
             log.info("user login failed, userAccount cannot match userPassword");
@@ -119,8 +119,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 //        request.getSession().setAttribute(USER_LOGIN_STATE, user);
 
         // 使用 Sa-Token 登录，并指定设备，同端登录互斥
-        StpUtil.login(user.getId(), DeviceUtils.getRequestDevice(request));
-        StpUtil.getSession().set(USER_LOGIN_STATE, user);
+        StpUtil.login(user.getId(), DeviceUtils.getRequestDevice(request)); //// 登录，判断登录设备是否允许登录
+        StpUtil.getSession().set(USER_LOGIN_STATE, user); // 保存用户
         return this.getLoginUserVO(user);
     }
 
@@ -332,11 +332,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public List<Integer> getUserSignInRecord(long userId, Integer year) {
         if (year == null) {
             LocalDate date = LocalDate.now();
-            year = date.getYear();
+            year = date.getYear();// 获取当前年份
         }
         String key = RedisConstant.getUserSignInRedisKey(year, userId);
         // 获取 Redis 的 BitMap
-        RBitSet signInBitSet = redissonClient.getBitSet(key);
+        RBitSet signInBitSet = redissonClient.getBitSet(key); // 获取 Redis 的 BitMap
         // 加载 BitSet 到内存中，避免后续读取时发送多次请求
         BitSet bitSet = signInBitSet.asBitSet();
         // 统计签到的日期

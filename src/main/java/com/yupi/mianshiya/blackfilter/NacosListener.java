@@ -39,9 +39,12 @@ public class NacosListener implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
         log.info("nacos 监听器启动");
 
+        /**
+         * 监听 Nacos 配置，并异步刷新黑名单
+         */
         String config = configService.getConfigAndSignListener(dataId, group, 3000L, new Listener() {
-            final ThreadFactory threadFactory = new ThreadFactory() {
-                private final AtomicInteger poolNumber = new AtomicInteger(1);
+            final ThreadFactory threadFactory = new ThreadFactory() { // 创建线程工厂，用于创建线程
+                private final AtomicInteger poolNumber = new AtomicInteger(1); // 线程池编号
 
                 @Override
                 public Thread newThread(@NotNull Runnable r) {

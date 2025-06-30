@@ -10,7 +10,7 @@ import com.yupi.mianshiya.exception.ThrowUtils;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 设备工具类
+ * Sa-token同端登录 设备工具类
  */
 public class DeviceUtils {
 

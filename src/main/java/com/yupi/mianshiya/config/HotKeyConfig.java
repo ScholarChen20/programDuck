@@ -8,11 +8,8 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * hotkey 热 key 发现配置
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航</a>
  */
-// todo 取消注释开启 HotKey（须先配置 HotKey）
+// todo 取消注释开启 HotKey（须先配置 HotKey）,默认是注销的
 //@Configuration
 //@ConfigurationProperties(prefix = "hotkey")
 @Data
@@ -43,13 +40,13 @@ public class HotKeyConfig {
      */
     @Bean
     public void initHotkey() {
-        ClientStarter.Builder builder = new ClientStarter.Builder();
-        ClientStarter starter = builder.setAppName(appName)
-                .setCaffeineSize(caffeineSize)
-                .setPushPeriod(pushPeriod)
-                .setEtcdServer(etcdServer)
-                .build();
-        starter.startPipeline();
+        ClientStarter.Builder builder = new ClientStarter.Builder(); // 创建热key启动器
+        ClientStarter starter = builder.setAppName(appName) // 设置应用名称
+                .setCaffeineSize(caffeineSize) // 设置本地缓存最大数量
+                .setPushPeriod(pushPeriod) // 设置批量推送 key 的间隔时间
+                .setEtcdServer(etcdServer) // 设置 Etcd 服务器完整地址
+                .build(); // 启动热key
+        starter.startPipeline(); // 启动热key流水线
     }
 
 }

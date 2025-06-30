@@ -13,12 +13,17 @@ public class NetUtils {
 
     /**
      * 获取客户端 IP 地址
-     *
+     * 实现过程：
+     * 1. 获取代理，兼容 ngin，获取第一个非 unknown 的值
+     * 1. 获取请求头中的 X-Forwarded-For，如果存在，则取第一个非 unknown 的 IP 地址作为客户端 IP 地址；
+     * 2. 如果不存在，则获取请求头中的 X-Real-IP，如果存在，则取该值作为客户端 IP 地址；
+     * 3. 如果不存在，则获取请求头中的 Remote-Addr，如果存在，则取该值作为客户端 IP 地址；
+     * 4. 如果以上三个值都不存在，则取本机 IP 地址作为客户端 IP 地址。
      * @param request
      * @return
      */
     public static String getIpAddress(HttpServletRequest request) {
-        String ip = request.getHeader("x-forwarded-for");
+        String ip = request.getHeader("x-forwarded-for"); // 获取代理，兼容 ngin，获取第一个非 unknown 的值
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
         }

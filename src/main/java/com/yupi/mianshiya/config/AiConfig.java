@@ -28,9 +28,9 @@ public class AiConfig {
         ConnectionPool connectionPool = new ConnectionPool(5, 1, TimeUnit.SECONDS);
         Dispatcher dispatcher = new Dispatcher();
         ArkService service = ArkService.builder().dispatcher(dispatcher).connectionPool(connectionPool)
-                .baseUrl("https://ark.cn-beijing.volces.com/api/v3")
-                .apiKey(apiKey)
-                .build();
+                .baseUrl("https://ark.cn-beijing.volces.com/api/v3") // Ark 默认地址
+                .apiKey(apiKey) // 设置 ApiKey
+                .build(); // 创建 ArkService 客户端
         return service;
     }
 }

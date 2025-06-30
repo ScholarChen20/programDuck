@@ -202,4 +202,4 @@ knife4j:
           - com.yupi.mianshiya.controller
 # AI 大模型接入（目前是火山引擎 DeepSeek）
 ai:
-  apiKey: 17f71b82-c743-49e8-ba44-f6daf53c0fc6xxxx
+  apiKey: 17f71b82-c743-49e8-ba44-f6daf53c0fc6xxx

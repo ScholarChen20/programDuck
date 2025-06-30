@@ -32,7 +32,7 @@ public class AiManager {
      * @return
      */
     public String doChat(String userPrompt) {
-        return doChat("", userPrompt, DEFAULT_MODEL);
+        return doChat("", userPrompt, DEFAULT_MODEL); // 使用默认模型
     }
 
     /**
@@ -57,10 +57,10 @@ public class AiManager {
     public String doChat(String systemPrompt, String userPrompt, String model) {
         // 构造消息列表
         final List<ChatMessage> messages = new ArrayList<>();
-        final ChatMessage systemMessage = ChatMessage.builder().role(ChatMessageRole.SYSTEM).content(systemPrompt).build();
-        final ChatMessage userMessage = ChatMessage.builder().role(ChatMessageRole.USER).content(userPrompt).build();
-        messages.add(systemMessage);
-        messages.add(userMessage);
+        final ChatMessage systemMessage = ChatMessage.builder().role(ChatMessageRole.SYSTEM).content(systemPrompt).build(); // 系统提示
+        final ChatMessage userMessage = ChatMessage.builder().role(ChatMessageRole.USER).content(userPrompt).build(); // 用户问题
+        messages.add(systemMessage); // 系统提示
+        messages.add(userMessage); // 用户问题
         return doChat(messages, model);
     }
 
@@ -82,16 +82,15 @@ public class AiManager {
      * @return
      */
     public String doChat(List<ChatMessage> messages, String model) {
-        // 构造请求
-        ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest.builder()
-//                .model("deepseek-v3-241226")
+        // 构造请求，默认模型，消息列表，默认超时时间
+        ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest.builder() //                .model("deepseek-v3-241226")
                 .model(model)
                 .messages(messages)
                 .build();
         // 调用接口发送请求
         List<ChatCompletionChoice> choices = aiService.createChatCompletion(chatCompletionRequest).getChoices();
-        if (CollUtil.isNotEmpty(choices)) {
-            return (String) choices.get(0).getMessage().getContent();
+        if (CollUtil.isNotEmpty(choices)) { /// 响应不为空，返回结果
+            return (String) choices.get(0).getMessage().getContent(); // 返回结果，默认返回字符串，可根据实际情况修改
         }
         throw new BusinessException(ErrorCode.OPERATION_ERROR, "AI 调用失败，没有返回结果");
 //        // shutdown service after all requests is finished
