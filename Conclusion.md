@@ -34,29 +34,15 @@ Bloom Filter 的作用是拦截掉绝大部分明显无效的请求，防止它�
         return device;
     }
 
-    /**
-     * 判断是否是小程序
-     * 一般通过 User-Agent 字符串中的 "MicroMessenger" 来判断是否是微信小程序
-     **/
     private static boolean isMiniProgram(String userAgentStr) {
-        // 判断 User-Agent 是否包含 "MicroMessenger" 表示是微信环境
         return StrUtil.containsIgnoreCase(userAgentStr, "MicroMessenger")
                 && StrUtil.containsIgnoreCase(userAgentStr, "MiniProgram");
     }
 
-    /**
-     * 判断是否为平板设备
-     * 支持 iOS（如 iPad）和 Android 平板的检测
-     **/
     private static boolean isPad(String userAgentStr) {
-        // 检查 iPad 的 User-Agent 标志
         boolean isIpad = StrUtil.containsIgnoreCase(userAgentStr, "iPad");
-
-        // 检查 Android 平板（包含 "Android" 且不包含 "Mobile"）
         boolean isAndroidTablet = StrUtil.containsIgnoreCase(userAgentStr, "Android")
                 && !StrUtil.containsIgnoreCase(userAgentStr, "Mobile");
-
-        // 如果是 iPad 或 Android 平板，则返回 true
         return isIpad || isAndroidTablet;
     }
 
@@ -69,8 +55,6 @@ MySQL LIKE 查询无法利用索引，会导致全表扫描，数据量大时查
 * 支持词典扩展： 可以添加自定义词库
 * 停用词过滤： 过滤掉无意义的词
 * 选择原因： 它是中文领域最成熟、最常用的 Elasticsearch 分词器之一，社区活跃，效果良好，能满足中文技术内容检索的需求。
-
-
 
 
     @PostMapping("/search/page/vo")
