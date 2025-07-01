@@ -17,7 +17,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Nacos 监听器
- *
+ * 通过Nacos配置中心监听配置变化，当配置变化时，调用BlackIpUtils.rebuildBlackIp方法重新构建布隆过滤器中的黑名单。
+ * Nacos配置变化后，会立即触发监听器的receiveConfigInfo方法，该方法会调用重建黑名单的方法，因此可以保证及时生效（取决于网络和重建速度）。
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://www.code-nav.cn">编程导航学习圈</a>
  */
@@ -53,7 +54,7 @@ public class NacosListener implements InitializingBean {
                     return thread;
                 }
             };
-            final ExecutorService executorService = Executors.newFixedThreadPool(1, threadFactory);
+            final ExecutorService executorService = Executors.newFixedThreadPool(1, threadFactory);  // 创建线程池，用于异步处理刷新黑名单的逻辑
 
             // 通过线程池异步处理黑名单变化的逻辑
             @Override
