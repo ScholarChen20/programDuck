@@ -35,12 +35,12 @@ public class BlackIpUtils {
      * @param configInfo
      */
     public static void rebuildBlackIp(String configInfo) {
-        if (StrUtil.isBlank(configInfo)) {
+        if (StrUtil.isBlank(configInfo)) { // 如果为空，则使用默认值
             configInfo = "{}";
         }
-        // 解析 yaml 文件,yaml文件从哪里来？ 前端传过来，怎么解析？
-        Yaml yaml = new Yaml();
-        Map map = yaml.loadAs(configInfo, Map.class); // yaml文件从哪里来？ 前端传过来，怎么解析？
+        // 解析 yaml 文件
+        Yaml yaml = new Yaml(); // 创建 yaml 对象
+        Map map = yaml.loadAs(configInfo, Map.class); // 解析 yaml 文件，获取 map 对象
         // 获取 IP 黑名单
         List<String> blackIpList = (List<String>) map.get("blackIpList");
         // 加锁防止并发

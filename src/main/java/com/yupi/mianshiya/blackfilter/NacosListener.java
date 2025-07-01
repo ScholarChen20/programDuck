@@ -42,7 +42,7 @@ public class NacosListener implements InitializingBean {
         /**
          * 监听 Nacos 配置，并异步刷新黑名单
          */
-        String config = configService.getConfigAndSignListener(dataId, group, 3000L, new Listener() {
+        String config = configService.getConfigAndSignListener(dataId, group, 3000L, new Listener() { // 监听器，监听配置信息变化
             final ThreadFactory threadFactory = new ThreadFactory() { // 创建线程工厂，用于创建线程
                 private final AtomicInteger poolNumber = new AtomicInteger(1); // 线程池编号
 
@@ -61,7 +61,7 @@ public class NacosListener implements InitializingBean {
                 return executorService;
             }
 
-            // 监听后续黑名单变化
+            // 监听后续黑名单变化，刷新黑名单，线程池会处理刷新逻辑
             @Override
             public void receiveConfigInfo(String configInfo) {
                 log.info("监听到配置信息变化：{}", configInfo);

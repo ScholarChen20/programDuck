@@ -130,10 +130,10 @@ mybatis-plus:
       logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
 # 热 key 探测
 hotkey:
-  app-name: mianshiya
-  caffeine-size: 10000
-  push-period: 1000
-  etcd-server: http://localhost:2379
+  app-name: mianshiya  # 应用名称
+  caffeine-size: 10000  # 缓存大小
+  push-period: 1000  # 推送间隔
+  etcd-server: http://localhost:2379  # etcd 地址
 # 配置中心
 nacos:
   config:
